@@ -9,10 +9,12 @@ import UserInfoDisplay from './components/UserInfoDisplay';
 import Home from './components/Home';
 import DailyNutritionalData from './components/DailyNutritionalData';
 import PrivateRoute from './components/PrivateRoute';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
