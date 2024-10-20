@@ -1,4 +1,4 @@
-// src/components/Register.js
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +19,11 @@ const Register = () => {
         email,
         password,
       });
-      alert(response.data.message); // Show success message
-      navigate('/login'); // Redirect to login page
+      alert(response.data.message); 
+      navigate('/login'); 
     } catch (error) {
       const errorMessage = error.response ? error.response.data.message : 'Registration failed!';
-      alert(errorMessage); // Show error message
+      alert(errorMessage); 
     }
   };
 
@@ -38,7 +38,7 @@ const Register = () => {
         position: 'relative',
       }}
     >
-      {/* Floating animated shape */}
+
       <motion.div
         style={{
           position: 'absolute',

@@ -1,10 +1,9 @@
-// src/components/Home.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { Button, Box, Container } from '@mui/material';
-import { motion } from 'framer-motion'; // For animations
+import { motion } from 'framer-motion'; 
 
 const Home = () => {
   return (
@@ -19,7 +18,7 @@ const Home = () => {
         overflow: 'hidden', // Hide shapes that move outside the container
       }}
     >
-      {/* Floating, animated shapes using inline styles */}
+
       <motion.div
         style={{
           position: 'absolute',
@@ -91,10 +90,10 @@ const Home = () => {
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
             textAlign: 'center',
             position: 'relative',
-            zIndex: 2, // Ensure the content is above the animated shapes
+            zIndex: 2,
           }}
         >
-          {/* Separate Typography for emojis to keep their default color */}
+
           <Typography
             variant="h2"
             sx={{
@@ -116,7 +115,7 @@ const Home = () => {
             component="span"
             sx={{
               fontSize: '2.8rem',
-              ml: 1, // Add a little margin-left to space out emojis from the text
+              ml: 1, 
             }}
           >
             🍽️🍔🍕🥗
@@ -135,7 +134,6 @@ const Home = () => {
           </Typography>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            {/* Button for Register */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Button
                 component={Link}
@@ -153,7 +151,6 @@ const Home = () => {
               </Button>
             </motion.div>
 
-            {/* Button for Login */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Button
                 component={Link}

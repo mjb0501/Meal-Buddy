@@ -98,7 +98,7 @@ const UserInfoForm = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Floating, animated shapes */}
+
       <motion.div
         style={{
           position: 'absolute',
@@ -145,7 +145,7 @@ const UserInfoForm = () => {
             zIndex: 2,
           }}
         >
-          {/* Apply the gradient color style similar to the home page header */}
+
           <Typography
             variant="h4"
             sx={{

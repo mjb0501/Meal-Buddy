@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const DailyNutritionalData = () => {
   const [formData, setFormData] = useState({
-    date: '', // Keep this field but it will be set automatically
+    date: '',
     calories: '',
     protein: '',
     carbs: '',
@@ -22,7 +22,7 @@ const DailyNutritionalData = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // Ensure the input is not negative
+    // Ensures the input is not negative
     if (value >= 0) {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -32,7 +32,7 @@ const DailyNutritionalData = () => {
     e.preventDefault();
     try {
       const response = await axios.post('/add-daily-data', formData);
-      alert(response.data.message); // Show success message
+      alert(response.data.message);
     } catch (error) {
       alert('Error updating nutritional data: ' + error.response.data.message);
     }
@@ -50,7 +50,7 @@ const DailyNutritionalData = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Floating, animated shapes */}
+
       <motion.div
         style={{
           position: 'absolute',
@@ -134,7 +134,7 @@ const DailyNutritionalData = () => {
               required
               fullWidth
               sx={{ mb: 2 }}
-              inputProps={{ min: 0 }} // Ensure the input is non-negative
+              inputProps={{ min: 0 }}
             />
 
             <TextField
@@ -146,7 +146,7 @@ const DailyNutritionalData = () => {
               required
               fullWidth
               sx={{ mb: 2 }}
-              inputProps={{ min: 0 }} // Ensure the input is non-negative
+              inputProps={{ min: 0 }}
             />
 
             <TextField
@@ -158,7 +158,7 @@ const DailyNutritionalData = () => {
               required
               fullWidth
               sx={{ mb: 2 }}
-              inputProps={{ min: 0 }} // Ensure the input is non-negative
+              inputProps={{ min: 0 }} 
             />
 
             <TextField
@@ -170,7 +170,7 @@ const DailyNutritionalData = () => {
               required
               fullWidth
               sx={{ mb: 2 }}
-              inputProps={{ min: 0 }} // Ensure the input is non-negative
+              inputProps={{ min: 0 }}
             />
 
             <TextField
@@ -181,7 +181,7 @@ const DailyNutritionalData = () => {
               onChange={handleChange}
               fullWidth
               sx={{ mb: 2 }}
-              inputProps={{ min: 0 }} // Ensure the input is non-negative
+              inputProps={{ min: 0 }} 
             />
 
             <TextField
@@ -192,7 +192,7 @@ const DailyNutritionalData = () => {
               onChange={handleChange}
               fullWidth
               sx={{ mb: 2 }}
-              inputProps={{ min: 0 }} // Ensure the input is non-negative
+              inputProps={{ min: 0 }} 
             />
 
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>

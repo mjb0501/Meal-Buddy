@@ -38,7 +38,7 @@ const Login = () => {
         position: 'relative',
       }}
     >
-      {/* Floating animated shape */}
+
       <motion.div
         style={{
           position: 'absolute',

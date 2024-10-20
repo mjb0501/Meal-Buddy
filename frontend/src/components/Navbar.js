@@ -16,12 +16,12 @@ const ResponsiveAppBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { user, logout } = useAuth();
 
-  // Toggle Drawer
+
   const toggleDrawer = () => {
     setIsDrawerOpen((prev) => !prev);
   };
 
-  // Pages based on user authentication
+
   const pages = user
     ? ['Home', 'Add Meal', 'User Info', { name: 'Logout', action: logout }]
     : ['Home', 'Login', 'Register'];
@@ -31,7 +31,7 @@ const ResponsiveAppBar = () => {
       <AppBar position="static" sx={{ backgroundColor: 'lightgrey', color: 'teal' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {/* Hamburger button */}
+
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
               </IconButton>
             </Box>
 
-            {/* Fullscreen Navigation */}
+
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => {
                 const pageName = typeof page === 'object' ? page.name : page;
@@ -72,7 +72,7 @@ const ResponsiveAppBar = () => {
         </Container>
       </AppBar>
 
-      {/* Sidebar (Drawer) for smaller screens */}
+
       <Drawer
         anchor="left"
         open={isDrawerOpen}
@@ -87,7 +87,7 @@ const ResponsiveAppBar = () => {
           },
         }}
       >
-        {/* Close Button inside Drawer (on the left side) */}
+
         <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
           <IconButton onClick={toggleDrawer} sx={{ color: 'turquoise' }}>
             <CloseIcon />

@@ -1,4 +1,4 @@
-require('dotenv').config(); // For environment variables
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -29,8 +29,8 @@ const dailyDataSchema = new mongoose.Schema({
   protein: { type: Number, required: true },
   carbs: { type: Number, required: true },
   fats: { type: Number, required: true },
-  sodium: { type: Number, required: false }, // Added sodium
-  sugar: { type: Number, required: false },  // Added sugar
+  sodium: { type: Number, required: false },
+  sugar: { type: Number, required: false },
 });
 
 
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
   age: Number,
   gender: String,
   activityLevel: String,
-  dailyData: [dailyDataSchema], // Embedded daily data
+  dailyData: [dailyDataSchema],
 });
 
 
@@ -125,13 +125,13 @@ const authenticate = (req, res, next) => {
 
 // Route to update user info
 app.post('/update-info', authenticate, async (req, res) => {
-  const { height, weight, age, gender, activityLevel } = req.body; // Removed nutrientIntake
+  const { height, weight, age, gender, activityLevel } = req.body;
 
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      { height, weight, age, gender, activityLevel }, // Updated to include activityLevel
+      { height, weight, age, gender, activityLevel },
       { new: true }
     );
 
@@ -147,7 +147,7 @@ app.post('/update-info', authenticate, async (req, res) => {
 
 // Route to add or update daily nutritional data
 app.post('/add-daily-data', authenticate, async (req, res) => {
-  const { calories, protein, carbs, fats, sodium, sugar } = req.body; // Added sodium and sugar
+  const { calories, protein, carbs, fats, sodium, sugar } = req.body;
   const userId = req.user.id;
 
 
@@ -159,12 +159,12 @@ app.post('/add-daily-data', authenticate, async (req, res) => {
     // Find the user's daily data for today's date
     const dailyData = await User.findOne(
       { _id: userId, 'dailyData.date': dateString },
-      { 'dailyData.$': 1 } // Only get the matching entry
+      { 'dailyData.$': 1 } 
     );
 
 
     if (dailyData) {
-      // If an entry exists, update it by adding the new values
+
       await User.updateOne(
         { _id: userId, 'dailyData.date': dateString },
         {
@@ -173,14 +173,14 @@ app.post('/add-daily-data', authenticate, async (req, res) => {
             'dailyData.$.protein': protein,
             'dailyData.$.carbs': carbs,
             'dailyData.$.fats': fats,
-            'dailyData.$.sodium': sodium, // Update sodium
-            'dailyData.$.sugar': sugar,   // Update sugar
+            'dailyData.$.sodium': sodium, 
+            'dailyData.$.sugar': sugar,   
           },
         }
       );
       return res.status(200).json({ message: 'Nutritional data updated successfully' });
     } else {
-      // If no entry exists, create a new one
+
       await User.updateOne(
         { _id: userId },
         {
@@ -191,8 +191,8 @@ app.post('/add-daily-data', authenticate, async (req, res) => {
               protein,
               carbs,
               fats,
-              sodium, // Add sodium
-              sugar,  // Add sugar
+              sodium,
+              sugar,
             },
           },
         }
@@ -209,7 +209,7 @@ app.post('/add-daily-data', authenticate, async (req, res) => {
 // Route to get user info
 app.get('/user-info', authenticate, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password'); // Exclude password
+    const user = await User.findById(req.user.id).select('-password');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

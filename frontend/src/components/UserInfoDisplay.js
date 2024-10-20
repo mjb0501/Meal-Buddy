@@ -16,7 +16,7 @@ import {
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { motion } from 'framer-motion';
 
-// Register chart.js components and annotation plugin
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, annotationPlugin);
 
 const UserInfoDisplay = () => {
@@ -114,7 +114,7 @@ const UserInfoDisplay = () => {
         {
           label: `${nutrient.charAt(0).toUpperCase() + nutrient.slice(1)} Intake`,
           data: data,
-          backgroundColor: '#36A2EB', // Original color for all bars
+          backgroundColor: '#36A2EB', 
         },
       ],
     };
@@ -125,7 +125,7 @@ const UserInfoDisplay = () => {
   
     const yAxisLabel = nutrient === 'calories' ? 'Calories (kcal)' :
                        nutrient === 'protein' || nutrient === 'carbs' || nutrient === 'fats' || nutrient === 'sugar' ? 'Grams (g)' :
-                       'Milligrams (mg)'; // For sodium
+                       'Milligrams (mg)'; 
   
     return {
       responsive: true,
@@ -274,8 +274,6 @@ const UserInfoDisplay = () => {
           >
             Past 7 Days Nutritional Data
           </Typography>
-          <br/>
-          <br/>
 
           <Grid container spacing={4}>
             <Grid item xs={12}>
