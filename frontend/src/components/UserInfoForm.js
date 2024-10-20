@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import axios from '../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-
+import { TextField, Button, RadioGroup, FormControlLabel, Radio, Typography, Box, Paper } from '@mui/material';
 
 const UserInfoForm = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    height: '',
+    heightFeet: '',
+    heightInches: '',
     weight: '',
     age: '',
     gender: '',
@@ -27,8 +28,11 @@ const UserInfoForm = () => {
   const validateInputs = () => {
     const newErrors = {};
 
-    if (!formData.height || isNaN(formData.height) || formData.height <= 0) {
-      newErrors.height = 'Height must be a positive number.';
+    if (!formData.heightFeet || isNaN(formData.heightFeet) || formData.heightFeet <= 0) {
+      newErrors.heightFeet = 'Feet must be a positive number.';
+    }
+    if (isNaN(formData.heightInches) || formData.heightInches < 0 || formData.heightInches >= 12) {
+      newErrors.heightInches = 'Inches must be between 0 and 11.';
     }
     if (!formData.weight || isNaN(formData.weight) || formData.weight <= 0) {
       newErrors.weight = 'Weight must be a positive number.';
@@ -39,8 +43,8 @@ const UserInfoForm = () => {
     if (!formData.gender) {
       newErrors.gender = 'Gender is required.';
     }
-    if (!formData.nutrientIntake) {
-      newErrors.nutrientIntake = 'Nutrient intake is required.';
+    if (!formData.nutrientIntake || isNaN(formData.nutrientIntake) || formData.nutrientIntake <= 0) {
+      newErrors.nutrientIntake = 'Nutrient intake must be a positive number.';
     }
 
     setErrors(newErrors); // Update the errors state
@@ -55,89 +59,101 @@ const UserInfoForm = () => {
       return; // Prevent form submission if there are validation errors
     }
 
+    const totalHeight = parseInt(formData.heightFeet) * 12 + parseInt(formData.heightInches); // Convert height to inches
+
     try {
-      await axios.post('/update-info', formData);
+      await axios.post('/update-info', { ...formData, height: totalHeight });
       alert('User information updated successfully!');
-      navigate('/add-daily-data')
+      navigate('/add-daily-data');
     } catch (error) {
       alert('Error updating information: ' + (error.response ? error.response.data.message : error.message));
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Update User Info</h2>
-      <input
-        name="height"
-        type="number"
-        placeholder="Height in Inches"
-        value={formData.height}
-        onChange={handleChange}
-        style={{ borderColor: errors.height ? 'red' : 'initial' }} // Highlight error
-      />
-      {errors.height && <span style={{ color: 'red' }}>{errors.height}</span>}
-      <br/>
-
-      <input
-        name="weight"
-        type="number"
-        placeholder="Weight"
-        value={formData.weight}
-        onChange={handleChange}
-        style={{ borderColor: errors.weight ? 'red' : 'initial' }} // Highlight error
-      />
-      {errors.weight && <span style={{ color: 'red' }}>{errors.weight}</span>}
-      <br/>
-
-      <input
-        name="age"
-        type="number"
-        placeholder="Age"
-        value={formData.age}
-        onChange={handleChange}
-        style={{ borderColor: errors.age ? 'red' : 'initial' }} // Highlight error
-      />
-      {errors.age && <span style={{ color: 'red' }}>{errors.age}</span>}
-      <br/>
-
-      <div>
-        <h4>Gender:</h4>
-        <label>
-          <input
-            type="radio"
-            name="gender"
-            value="Male"
-            checked={formData.gender === 'Male'}
+    <Paper elevation={4} sx={{ maxWidth: 500, mx: 'auto', p: 4, mt: 5, borderRadius: 3 }}>
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        Update User Info
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+          <TextField
+            name="heightFeet"
+            label="Height (Feet)"
+            type="number"
+            value={formData.heightFeet}
             onChange={handleChange}
+            error={!!errors.heightFeet}
+            helperText={errors.heightFeet}
+            fullWidth
           />
-          Male
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="gender"
-            value="Female"
-            checked={formData.gender === 'Female'}
+          <TextField
+            name="heightInches"
+            label="Height (Inches)"
+            type="number"
+            value={formData.heightInches}
             onChange={handleChange}
+            error={!!errors.heightInches}
+            helperText={errors.heightInches}
+            fullWidth
           />
-          Female
-        </label>
-      </div>
-      {errors.gender && <span style={{ color: 'red' }}>{errors.gender}</span>}
-      <br/>
+        </Box>
 
-      <input
-        name="nutrientIntake"
-        type="number"
-        placeholder="Nutrient Intake in Calories"
-        value={formData.nutrientIntake}
-        onChange={handleChange}
-        style={{ borderColor: errors.nutrientIntake ? 'red' : 'initial' }} // Highlight error
-      />
-      {errors.nutrientIntake && <span style={{ color: 'red' }}>{errors.nutrientIntake}</span>}
-      <br/>
-      <button type="submit">Update Info</button>
-    </form>
+        <TextField
+          name="weight"
+          label="Weight (lbs)"  // Updated label to indicate weight is in pounds
+          type="number"
+          value={formData.weight}
+          onChange={handleChange}
+          error={!!errors.weight}
+          helperText={errors.weight}
+          fullWidth
+          sx={{ mb: 2 }}
+        />
+
+        <TextField
+          name="age"
+          label="Age"
+          type="number"
+          value={formData.age}
+          onChange={handleChange}
+          error={!!errors.age}
+          helperText={errors.age}
+          fullWidth
+          sx={{ mb: 2 }}
+        />
+
+        <Typography variant="h6" sx={{ mb: 1 }}>
+          Gender:
+        </Typography>
+        <RadioGroup
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
+          sx={{ mb: 2 }}
+        >
+          <FormControlLabel value="Male" control={<Radio />} label="Male" />
+          <FormControlLabel value="Female" control={<Radio />} label="Female" />
+        </RadioGroup>
+        {errors.gender && <Typography color="error">{errors.gender}</Typography>}
+
+        <TextField
+          name="nutrientIntake"
+          label="Nutrient Intake (Calories)"
+          type="number"
+          value={formData.nutrientIntake}
+          onChange={handleChange}
+          error={!!errors.nutrientIntake}
+          helperText={errors.nutrientIntake}
+          fullWidth
+          sx={{ mb: 3 }}
+        />
+
+        <Button variant="contained" color="primary" type="submit" fullWidth>
+          Update Info
+        </Button>
+      </form>
+    </Paper>
   );
 };
 

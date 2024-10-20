@@ -2,11 +2,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../utils/axiosInstance';
 import { useAuth } from '../context/AuthContext'; // Ensure this is the correct path
+import { Paper, Typography, Box } from '@mui/material';
 
 const UserInfoDisplay = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [error, setError] = useState('');
   const { user } = useAuth(); // Assuming you have user context to check authentication
+
+  // Function to format height from inches to feet and inches (e.g., 6'2")
+  const formatHeight = (heightInInches) => {
+    const feet = Math.floor(heightInInches / 12);
+    const inches = heightInInches % 12;
+    return `${feet}'${inches}"`;
+  };
+
+  // Function to format the date to YYYY-MM-DD
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Removes the time component
+  };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -24,37 +38,62 @@ const UserInfoDisplay = () => {
   }, [user]);
 
   if (error) {
-    return <div style={{ color: 'red' }}>{error}</div>;
+    return <Typography color="error">{error}</Typography>;
   }
 
   if (!userInfo) {
-    return <div>Loading user information...</div>;
+    return <Typography>Loading user information...</Typography>;
   }
 
   return (
-    <div>
-      <h2>User Information</h2>
-      <p><strong>Username:</strong> {userInfo.username}</p>
-      <p><strong>Email:</strong> {userInfo.email}</p>
-      <p><strong>Age:</strong> {userInfo.age}</p>
-      <p><strong>Height:</strong> {userInfo.height}</p>
-      <p><strong>Weight:</strong> {userInfo.weight}</p>
-      <p><strong>Gender:</strong> {userInfo.gender}</p>
-      <p><strong>Nutrient Intake:</strong> {userInfo.nutrientIntake}</p>
-      {/* Display daily data if needed */}
-      <h3>Daily Nutritional Data</h3>
+    <Paper
+      elevation={4} // Adds shadow effect
+      sx={{
+        maxWidth: 600,
+        mx: 'auto',
+        p: 3,
+        mt: 5,
+        borderRadius: 3,
+      }}
+    >
+      <Typography variant="h4" sx={{ mb: 2 }}>
+        User Information
+      </Typography>
+
+      <Box sx={{ mb: 2 }}>
+        <Typography><strong>Username:</strong> {userInfo.username}</Typography>
+        <Typography><strong>Email:</strong> {userInfo.email}</Typography>
+        <Typography><strong>Age:</strong> {userInfo.age}</Typography>
+        <Typography><strong>Height:</strong> {formatHeight(userInfo.height)}</Typography>
+        <Typography><strong>Weight:</strong> {userInfo.weight} lbs</Typography>
+        <Typography><strong>Gender:</strong> {userInfo.gender}</Typography>
+        <Typography><strong>Calorie Intake:</strong> {userInfo.nutrientIntake} kcal</Typography>
+      </Box>
+
+      <Typography variant="h5" sx={{ mb: 2 }}>
+        Daily Nutritional Data
+      </Typography>
+
       {userInfo.dailyData.length > 0 ? (
-        <ul>
+        <Box component="ul" sx={{ padding: 0, listStyleType: 'none' }}>
           {userInfo.dailyData.map((data, index) => (
-            <li key={index}>
-              Date: {data.date} - Calories: {data.calories}, Protein: {data.protein}, Carbs: {data.carbs}, Fats: {data.fats}
-            </li>
+            <Box component="li" key={index} sx={{ mb: 1 }}>
+              <Typography>
+                <strong>Date:</strong> {formatDate(data.date)}
+              </Typography>
+              <Typography>
+                <strong>Calories:</strong> {data.calories} kcal, 
+                <strong> Protein:</strong> {data.protein}g, 
+                <strong> Carbs:</strong> {data.carbs}g, 
+                <strong> Fats:</strong> {data.fats}g
+              </Typography>
+            </Box>
           ))}
-        </ul>
+        </Box>
       ) : (
-        <p>No daily nutritional data available.</p>
+        <Typography>No daily nutritional data available.</Typography>
       )}
-    </div>
+    </Paper>
   );
 };
 
