@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ const Login = () => {
 
   return (
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '30px'}}>
-      <Paper elevation={3} style={{padding: '20px', display: 'flex', justifyContent: 'center'}}>
+      <Paper elevation={3} style={{padding: '20px', display: 'flex', justifyContent: 'center', flexDirection: 'column-reverse'}}>
         <form onSubmit={handleLogin}>
           <Typography variant="h4">Login</Typography>
           <br/>
@@ -53,7 +54,9 @@ const Login = () => {
             required
           />
           <br/>
-          <button type="submit">Login</button>
+          <br/>
+          <Button variant="contained" type="submit">Login</Button>
+          <Button>Register</Button>
         </form>
       </Paper>
     </div>
