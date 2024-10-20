@@ -1,7 +1,9 @@
+// src/components/Register.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Paper, Typography, TextField, Button } from '@mui/material';
+import { Paper, Typography, TextField, Button, Container } from '@mui/material';
+import { motion } from 'framer-motion';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -26,56 +28,130 @@ const Register = () => {
   };
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '30px'}}>
-      <Paper elevation={3} style={{padding: '20px', display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
-        <form onSubmit={handleRegister}>
-          <Typography variant="h4" sx={{ mb: 2 }}>Register</Typography>
+    <Container
+      maxWidth="sm"
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+      }}
+    >
+      {/* Floating animated shape */}
+      <motion.div
+        style={{
+          position: 'absolute',
+          width: '100px',
+          height: '100px',
+          borderRadius: '50%',
+          background: 'linear-gradient(45deg, #ff9a9e, #fad0c4)',
+          top: '10%',
+          left: '15%',
+          opacity: 0.7,
+        }}
+        animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        style={{
+          position: 'absolute',
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          background: 'linear-gradient(45deg, #fbc2eb, #a6c1ee)',
+          bottom: '15%',
+          right: '20%',
+          opacity: 0.7,
+        }}
+        animate={{ y: [0, 15, 0], rotate: [0, 90, 180] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+      />
 
-          <TextField
-            label="Username"
-            variant="outlined"
-            size="small"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <Paper
+          elevation={4}
+          sx={{
+            padding: '40px',
+            borderRadius: '15px',
+            background: 'rgba(255, 255, 255, 0.9)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+            textAlign: 'center',
+          }}
+        >
+          <form onSubmit={handleRegister}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 'bold',
+                background: 'linear-gradient(to right, #6a11cb, #2575fc)',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+                mb: 3,
+              }}
+            >
+              Register
+            </Typography>
 
-          <TextField
-            label="Email"
-            variant="outlined"
-            size="small"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+            <TextField
+              label="Username"
+              variant="outlined"
+              size="small"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              fullWidth
+              sx={{ mb: 2 }}
+            />
 
-          <TextField
-            label="Password"
-            variant="outlined"
-            size="small"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+            <TextField
+              label="Email"
+              variant="outlined"
+              size="small"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              fullWidth
+              sx={{ mb: 2 }}
+            />
 
-          <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
-            Register
-          </Button>
-        </form>
-      </Paper>
-    </div>
+            <TextField
+              label="Password"
+              variant="outlined"
+              size="small"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="contained"
+                type="submit"
+                fullWidth
+                sx={{
+                  background: 'linear-gradient(to right, #6a11cb, #2575fc)',
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  '&:hover': { background: '#4a00e0' },
+                }}
+              >
+                Register
+              </Button>
+            </motion.div>
+          </form>
+        </Paper>
+      </motion.div>
+    </Container>
   );
 };
 

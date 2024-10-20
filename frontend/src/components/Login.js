@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from '../utils/axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Box, Container } from '@mui/material';
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -27,43 +28,126 @@ const Login = () => {
   };
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '30px'}}>
-      <Paper elevation={3} style={{padding: '20px', display: 'flex', justifyContent: 'center', flexDirection: 'column-reverse'}}>
-        <form onSubmit={handleLogin}>
-          <Typography variant="h4">Login</Typography>
-          <br/>
-          <TextField
-            label="Email"
-            variant="outlined"
-            size="small"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <br/>
-          <br/>
-          <TextField
-            label="Password"
-            variant="outlined"
-            size="small"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <br/>
-          <br/>
-          <Button variant="contained" type="submit">Login</Button>
-          <br/>
-          <Typography variant="body1">
-            If you don't yet have an account click <Link style={{ color: 'teal', fontWeight: 'bold'}} to="/register">here</Link>.
-          </Typography>
-        </form>
-      </Paper>
-    </div>
+    <Container
+      maxWidth="sm"
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+      }}
+    >
+      {/* Floating animated shape */}
+      <motion.div
+        style={{
+          position: 'absolute',
+          width: '100px',
+          height: '100px',
+          borderRadius: '50%',
+          background: 'linear-gradient(45deg, #ff9a9e, #fad0c4)',
+          top: '10%',
+          left: '15%',
+          opacity: 0.7,
+        }}
+        animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        style={{
+          position: 'absolute',
+          width: '120px',
+          height: '120px',
+          borderRadius: '50%',
+          background: 'linear-gradient(45deg, #fbc2eb, #a6c1ee)',
+          bottom: '15%',
+          right: '20%',
+          opacity: 0.7,
+        }}
+        animate={{ y: [0, 15, 0], rotate: [0, 90, 180] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <Paper
+          elevation={4}
+          sx={{
+            padding: '40px',
+            borderRadius: '15px',
+            background: 'rgba(255, 255, 255, 0.9)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+            textAlign: 'center',
+          }}
+        >
+          <form onSubmit={handleLogin}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 'bold',
+                background: 'linear-gradient(to right, #6a11cb, #2575fc)',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+                mb: 3,
+              }}
+            >
+              Login
+            </Typography>
+
+            <TextField
+              label="Email"
+              variant="outlined"
+              size="small"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+
+            <TextField
+              label="Password"
+              variant="outlined"
+              size="small"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              fullWidth
+              sx={{ mb: 2 }}
+            />
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                variant="contained"
+                type="submit"
+                fullWidth
+                sx={{
+                  background: 'linear-gradient(to right, #6a11cb, #2575fc)',
+                  color: '#fff',
+                  fontWeight: 'bold',
+                  '&:hover': { background: '#4a00e0' },
+                  mb: 2,
+                }}
+              >
+                Login
+              </Button>
+            </motion.div>
+
+            <Typography variant="body1">
+              Don't have an account?{' '}
+              <Link style={{ color: '#2575fc', fontWeight: 'bold' }} to="/register">
+                Register here
+              </Link>
+            </Typography>
+          </form>
+        </Paper>
+      </motion.div>
+    </Container>
   );
 };
 
