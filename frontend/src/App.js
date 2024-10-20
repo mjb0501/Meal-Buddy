@@ -20,8 +20,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/update-user-info" element={<PrivateRoute element={<UserInfoForm />} />} />
-          <Route path="/add-daily-data" element={<PrivateRoute element={<DailyNutritionalData />} />} />
+          <Route path="/update-info" element={<PrivateRoute element={<UserInfoForm />} />} />
+          <Route path="/add-meal" element={<PrivateRoute element={<DailyNutritionalData />} />} />
           <Route path="/user-info" element={<PrivateRoute element={<UserInfoDisplay />} />} />
         </Routes>
       </Router>

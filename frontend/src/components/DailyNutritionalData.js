@@ -1,16 +1,22 @@
 // src/components/DailyNutritionalData.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../utils/axiosInstance';
 import { Box, Button, TextField, Typography, Paper } from '@mui/material';
 
 const DailyNutritionalData = () => {
   const [formData, setFormData] = useState({
-    date: '',
+    date: '', // Keep this field but it will be set automatically
     calories: '',
     protein: '',
     carbs: '',
     fats: '',
   });
+
+  // Set the current date when the component mounts
+  useEffect(() => {
+    const currentDate = new Date().toISOString().split('T')[0]; // Format to YYYY-MM-DD
+    setFormData((prev) => ({ ...prev, date: currentDate }));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,19 +50,14 @@ const DailyNutritionalData = () => {
         sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
       >
         <Typography variant="h5" sx={{ mb: 2 }}>
-          Daily Nutritional Data
+          Add Information About Your Meal
         </Typography>
 
-        <TextField
-          label="Date"
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }} // Keeps label above the date field
-          required
-          fullWidth
-        />
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          Fill out the following about your last meal.  
+          This data will add to your daily nutritional data which can be viewed
+          under User Info.
+        </Typography>
 
         <TextField
           label="Calories"

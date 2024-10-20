@@ -12,7 +12,6 @@ const UserInfoForm = () => {
     weight: '',
     age: '',
     gender: '',
-    nutrientIntake: '',
   });
 
   const [errors, setErrors] = useState({}); // State for input errors
@@ -43,9 +42,6 @@ const UserInfoForm = () => {
     if (!formData.gender) {
       newErrors.gender = 'Gender is required.';
     }
-    if (!formData.nutrientIntake || isNaN(formData.nutrientIntake) || formData.nutrientIntake <= 0) {
-      newErrors.nutrientIntake = 'Nutrient intake must be a positive number.';
-    }
 
     setErrors(newErrors); // Update the errors state
     return Object.keys(newErrors).length === 0; // Return true if no errors
@@ -62,7 +58,7 @@ const UserInfoForm = () => {
     const totalHeight = parseInt(formData.heightFeet) * 12 + parseInt(formData.heightInches); // Convert height to inches
 
     try {
-      await axios.post('/update-info', { ...formData, height: totalHeight });
+      await axios.post('/update-info', { ...formData, height: totalHeight }); // Remove nutrientIntake
       alert('User information updated successfully!');
       navigate('/add-daily-data');
     } catch (error) {
@@ -136,18 +132,6 @@ const UserInfoForm = () => {
           <FormControlLabel value="Female" control={<Radio />} label="Female" />
         </RadioGroup>
         {errors.gender && <Typography color="error">{errors.gender}</Typography>}
-
-        <TextField
-          name="nutrientIntake"
-          label="Nutrient Intake (Calories)"
-          type="number"
-          value={formData.nutrientIntake}
-          onChange={handleChange}
-          error={!!errors.nutrientIntake}
-          helperText={errors.nutrientIntake}
-          fullWidth
-          sx={{ mb: 3 }}
-        />
 
         <Button variant="contained" color="primary" type="submit" fullWidth>
           Update Info
