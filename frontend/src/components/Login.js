@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -56,7 +57,10 @@ const Login = () => {
           <br/>
           <br/>
           <Button variant="contained" type="submit">Login</Button>
-          <Button>Register</Button>
+          <br/>
+          <Typography variant="body1">
+            If you don't yet have an account click <Link style={{ color: 'teal', fontWeight: 'bold'}} to="/register">here</Link>.
+          </Typography>
         </form>
       </Paper>
     </div>

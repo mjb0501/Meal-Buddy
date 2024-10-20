@@ -26,7 +26,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar  position="static" sx={{backgroundColor: 'lightgrey', color: 'teal'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -45,7 +45,7 @@ function ResponsiveAppBar() {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Link to={page === 'Home' ? '/' : `/${page.replace(/\s+/g, '-').toLowerCase()}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                    <Typography sx={{ textAlign: 'center'}}>{page}</Typography>
                   </Link>
                 </MenuItem>
               ))}
@@ -55,7 +55,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Link to={page === 'Home' ? '/' : `/${page.replace(/\s+/g, '-').toLowerCase()}`} key={page} style={{ textDecoration: 'none' }}>
-                <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Button onClick={handleCloseNavMenu} sx={{ my: 2, color: 'teal', display: 'block' }}>
                   {page}
                 </Button>
               </Link>
