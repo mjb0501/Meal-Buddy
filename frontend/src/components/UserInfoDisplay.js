@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../utils/axiosInstance';
-import { useAuth } from '../context/AuthContext'; // Ensure this is the correct path
-import { Paper, Typography, Box, Grid } from '@mui/material';
+import { useAuth } from '../context/AuthContext';
+import { Paper, Typography, Box, Grid, CircularProgress, Alert } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
 
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -11,15 +19,19 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const UserInfoDisplay = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
   const { user } = useAuth(); // Assuming you have user context to check authentication
 
   useEffect(() => {
     const fetchUserInfo = async () => {
+      setLoading(true); // Set loading to true before fetching data
       try {
         const response = await axios.get('/user-info');
         setUserInfo(response.data);
       } catch (err) {
         setError(err.response ? err.response.data.message : 'Error fetching user info');
+      } finally {
+        setLoading(false); // Set loading to false after fetching data
       }
     };
 
@@ -28,12 +40,21 @@ const UserInfoDisplay = () => {
     }
   }, [user]);
 
+  if (loading) {
+    return (
+      <Box sx={{ textAlign: 'center', mt: 5 }}>
+        <CircularProgress />
+        <Typography variant="h6" sx={{ mt: 2 }}>Loading user information...</Typography>
+      </Box>
+    );
+  }
+
   if (error) {
-    return <Typography color="error">{error}</Typography>;
+    return <Alert severity="error">{error}</Alert>;
   }
 
   if (!userInfo) {
-    return <Typography>Loading user information...</Typography>;
+    return <Typography>No user information available.</Typography>;
   }
 
   // Function to convert height in inches to feet and inches format
@@ -49,23 +70,19 @@ const UserInfoDisplay = () => {
 
   // Calculate BMR using the Mifflin-St Jeor Equation
   const calculateBMR = (weight, height, age, gender) => {
-    if (gender === 'Male') {
-      return 10 * weight + 6.25 * height - 5 * age + 5; // BMR formula for men
-    } else {
-      return 10 * weight + 6.25 * height - 5 * age - 161; // BMR formula for women
-    }
+    return gender === 'Male'
+      ? 10 * weight + 6.25 * height - 5 * age + 5 // BMR formula for men
+      : 10 * weight + 6.25 * height - 5 * age - 161; // BMR formula for women
   };
 
   const bmr = calculateBMR(weightInKg, heightInCm, userInfo.age, userInfo.gender);
 
-  // Generate labels for the past 7 days (use available data or fill with blank labels)
-  const today = new Date();
-  const labels = [];
-  for (let i = 6; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    labels.push(date.toISOString().split('T')[0]); // Format date as YYYY-MM-DD
-  }
+  // Generate labels for the past 7 days
+  const labels = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (6 - i));
+    return date.toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+  });
 
   // Function to fill missing days with 0 values
   const fillMissingData = (nutrient) => {
@@ -74,46 +91,37 @@ const UserInfoDisplay = () => {
       return map;
     }, {});
 
-    // Return the value for each day, or 0 if the day is not in the dataset
     return labels.map(label => dataMap[label] || 0);
   };
 
   // Chart data configurations for each nutrient
   const createChartData = (nutrient) => ({
     labels,
-    datasets: [
-      {
-        label: `${nutrient} Intake`,
-        data: fillMissingData(nutrient),
-        backgroundColor: nutrient === 'calories' ? '#FF6384' : nutrient === 'protein' ? '#36A2EB' : nutrient === 'carbs' ? '#FFCE56' : '#4BC0C0',
-      },
-    ],
+    datasets: [{
+      label: `${nutrient.charAt(0).toUpperCase() + nutrient.slice(1)} Intake`,
+      data: fillMissingData(nutrient),
+      backgroundColor: nutrient === 'calories' ? '#FF6384' : 
+                       nutrient === 'protein' ? '#36A2EB' : 
+                       nutrient === 'carbs' ? '#FFCE56' : 
+                       nutrient === 'fats' ? '#4BC0C0' :
+                       nutrient === 'sodium' ? '#FF9F40' : 
+                       '#9966FF', // Add distinct colors for sodium and sugar
+    }],
   });
 
   const options = (title) => ({
     responsive: true,
     plugins: {
-      legend: {
-        display: false, // Hide legend for a cleaner look
-      },
-      title: {
-        display: true,
-        text: title,
-      },
+      legend: { display: false },
+      title: { display: true, text: title },
     },
     scales: {
       y: {
-        beginAtZero: true, // Ensure the Y-axis starts from zero
-        title: {
-          display: true,
-          text: 'Amount',
-        },
+        beginAtZero: true,
+        title: { display: true, text: 'Amount' },
       },
       x: {
-        title: {
-          display: true,
-          text: 'Date',
-        },
+        title: { display: true, text: 'Date' },
       },
     },
   });
@@ -137,10 +145,11 @@ const UserInfoDisplay = () => {
         <Typography><strong>Username:</strong> {userInfo.username}</Typography>
         <Typography><strong>Email:</strong> {userInfo.email}</Typography>
         <Typography><strong>Age:</strong> {userInfo.age}</Typography>
-        <Typography><strong>Height:</strong> {formatHeight(userInfo.height)}</Typography> {/* Display in feet and inches */}
+        <Typography><strong>Height:</strong> {formatHeight(userInfo.height)}</Typography>
         <Typography><strong>Weight:</strong> {userInfo.weight} lbs</Typography>
         <Typography><strong>Gender:</strong> {userInfo.gender}</Typography>
-        <Typography><strong>BMR (Basal Metabolic Rate):</strong> {Math.round(bmr)} kcal/day</Typography> {/* Updated BMR display */}
+        <Typography><strong>BMR (Basal Metabolic Rate):</strong> {Math.round(bmr)} kcal/day</Typography>
+        <Typography><strong>Activity Level:</strong> {userInfo.activityLevel || 'Not specified'}</Typography> {/* Display activity level */}
       </Box>
 
       <Typography variant="h5" sx={{ mb: 2 }}>
@@ -159,6 +168,12 @@ const UserInfoDisplay = () => {
         </Grid>
         <Grid item xs={12}>
           <Bar data={createChartData('fats')} options={options('Fats Intake (Last 7 Days)')} />
+        </Grid>
+        <Grid item xs={12}>
+          <Bar data={createChartData('sodium')} options={options('Sodium Intake (Last 7 Days)')} />
+        </Grid>
+        <Grid item xs={12}>
+          <Bar data={createChartData('sugar')} options={options('Sugar Intake (Last 7 Days)')} />
         </Grid>
       </Grid>
     </Paper>

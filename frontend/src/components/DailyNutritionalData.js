@@ -1,4 +1,3 @@
-// src/components/DailyNutritionalData.js
 import React, { useState, useEffect } from 'react';
 import axios from '../utils/axiosInstance';
 import { Box, Button, TextField, Typography, Paper } from '@mui/material';
@@ -10,6 +9,8 @@ const DailyNutritionalData = () => {
     protein: '',
     carbs: '',
     fats: '',
+    sodium: '', // Added sodium field
+    sugar: '',  // Added sugar field
   });
 
   // Set the current date when the component mounts
@@ -96,6 +97,24 @@ const DailyNutritionalData = () => {
           value={formData.fats}
           onChange={handleChange}
           required
+          fullWidth
+        />
+
+        <TextField
+          label="Sodium (mg)" // New input for sodium
+          type="number"
+          name="sodium"
+          value={formData.sodium}
+          onChange={handleChange}
+          fullWidth
+        />
+
+        <TextField
+          label="Sugar (g)" // New input for sugar
+          type="number"
+          name="sugar"
+          value={formData.sugar}
+          onChange={handleChange}
           fullWidth
         />
 

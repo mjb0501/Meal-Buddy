@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import axios from '../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, RadioGroup, FormControlLabel, Radio, Typography, Box, Paper } from '@mui/material';
+import {
+  TextField,
+  Button,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Typography,
+  Box,
+  Paper,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from '@mui/material';
 
 const UserInfoForm = () => {
   const navigate = useNavigate();
@@ -12,6 +25,7 @@ const UserInfoForm = () => {
     weight: '',
     age: '',
     gender: '',
+    activityLevel: '', // New field for activity level
   });
 
   const [errors, setErrors] = useState({}); // State for input errors
@@ -19,7 +33,7 @@ const UserInfoForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
+
     // Reset error for the specific field on change
     setErrors((prev) => ({ ...prev, [name]: '' }));
   };
@@ -42,6 +56,9 @@ const UserInfoForm = () => {
     if (!formData.gender) {
       newErrors.gender = 'Gender is required.';
     }
+    if (!formData.activityLevel) {
+      newErrors.activityLevel = 'Activity level is required.'; // New validation for activity level
+    }
 
     setErrors(newErrors); // Update the errors state
     return Object.keys(newErrors).length === 0; // Return true if no errors
@@ -58,7 +75,10 @@ const UserInfoForm = () => {
     const totalHeight = parseInt(formData.heightFeet) * 12 + parseInt(formData.heightInches); // Convert height to inches
 
     try {
-      await axios.post('/update-info', { ...formData, height: totalHeight }); // Remove nutrientIntake
+      await axios.post('/update-info', { 
+        ...formData, 
+        height: totalHeight 
+      });
       alert('User information updated successfully!');
       navigate('/add-daily-data');
     } catch (error) {
@@ -97,7 +117,7 @@ const UserInfoForm = () => {
 
         <TextField
           name="weight"
-          label="Weight (lbs)"  // Updated label to indicate weight is in pounds
+          label="Weight (lbs)" // Updated label to indicate weight is in pounds
           type="number"
           value={formData.weight}
           onChange={handleChange}
@@ -132,6 +152,27 @@ const UserInfoForm = () => {
           <FormControlLabel value="Female" control={<Radio />} label="Female" />
         </RadioGroup>
         {errors.gender && <Typography color="error">{errors.gender}</Typography>}
+
+        <FormControl fullWidth sx={{ mb: 2 }}>
+          <InputLabel id="activity-level-label">Activity Level</InputLabel>
+          <Select
+            labelId="activity-level-label"
+            name="activityLevel"
+            value={formData.activityLevel}
+            onChange={handleChange}
+            error={!!errors.activityLevel}
+          >
+            <MenuItem value="">
+              <em>Select Activity Level</em>
+            </MenuItem>
+            <MenuItem value="Sedentary">Sedentary</MenuItem>
+            <MenuItem value="Lightly active">Lightly active</MenuItem>
+            <MenuItem value="Moderately active">Moderately active</MenuItem>
+            <MenuItem value="Very active">Very active</MenuItem>
+            <MenuItem value="Super active">Super active</MenuItem>
+          </Select>
+          {errors.activityLevel && <Typography color="error">{errors.activityLevel}</Typography>}
+        </FormControl>
 
         <Button variant="contained" color="primary" type="submit" fullWidth>
           Update Info
