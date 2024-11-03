@@ -59,4 +59,4 @@ For further details on Create React App, see [Create React App documentation](ht
 See the deployment guide in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/deployment) for details on deploying your React frontend.
 
 # App Screenshots
-<img src="https://i.imgur.com/7RDG4O4.png" width=32.5%>&nbsp;<img src="https://i.imgur.com/QSXsX3x.jpg" width=32.5%>&nbsp;<img src="https://i.imgur.com/lsjvk5e.jpg" width=32.5%>
+<img src="https://i.imgur.com/7RDG4O4.png" width=32.5%>&nbsp;<img src="https://i.imgur.com/QSXsX3x.jpg" width=32.5%>&nbsp;<img src="https://i.imgur.com/BlNl3UK.jpg" width=32.5%>
