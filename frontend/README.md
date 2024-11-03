@@ -1,6 +1,20 @@
-# Getting Started with Create React App
+<img src="https://i.imgur.com/wB3dN6h.png" align="right" width=15%>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Meal Buddy 🍽️
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/mongodb-%2347A248.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+
+**Meal Buddy** is a MERN-based application designed to help users track and manage their daily calorie intake and nutritional goals. With interactive features and real-time data storage, users can plan meals, set targets, and monitor their dietary habits with ease. Meal Buddy makes health tracking simple and accessible for everyone looking to stay on top of their nutrition goals.
+
+## 🍎 Key Features
+- **Calorie Tracking**: Easily track your daily caloric intake based on meals added throughout the day.
+- **Nutrient Breakdown**: View detailed information on carbohydrates, fats, proteins, and other essential nutrients.
+- **Personalized Goals**: Set daily or weekly dietary goals and track your progress.
+- **Data Persistence with MongoDB**: User data is stored and managed with MongoDB for reliable, real-time access.
+- **Interactive Interface**: A user-friendly UI for easy navigation and tracking.
 
 ## Available Scripts
 
@@ -8,11 +22,10 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The page will reload when you make changes, and you may also see lint errors in the console.
 
 ### `npm test`
 
@@ -24,47 +37,28 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The build is minified, and filenames include hashes. Your app is now ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Note: This is a one-way operation. Once you `eject`, you can't go back!**\
+If you aren’t satisfied with the build tool and configuration choices, `eject` will remove the single build dependency from your project, copying configuration files and dependencies (e.g., webpack, Babel, ESLint) directly into your project for more control.
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To learn more about using the MERN stack, visit:
+- [MongoDB Documentation](https://docs.mongodb.com/)
+- [Express.js Documentation](https://expressjs.com/)
+- [React Documentation](https://reactjs.org/)
+- [Node.js Documentation](https://nodejs.org/)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+For further details on Create React App, see [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### Code Splitting
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+See the deployment guide in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/deployment) for details on deploying your React frontend.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# App Screenshots
+<img src="https://i.imgur.com/b4YMX4A.jpg" width=32.5%>&nbsp;<img src="https://i.imgur.com/KsA4kJW.jpg" width=32.5%>&nbsp;<img src="https://i.imgur.com/lsjvk5e.jpg" width=32.5%>
